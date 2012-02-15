@@ -1,0 +1,11 @@
+LEARNING TESTS
+
+Testing is everywhere. Tests assert that your code does exactly you want it to
+do. But do you know about the didactic benefit of unit testing? Simple tests
+can help you to understand how third party code works and ease the initial
+training for new APIs or third party libraries.
+
+A learning test can serve as a good reference. This project wants to collect
+such learing tests. Primarily this tests explain the use case instead of
+checking the code for its correctness.
+
