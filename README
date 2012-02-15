@@ -9,3 +9,6 @@ A learning test can serve as a good reference. This project wants to collect
 such learing tests. Primarily this tests explain the use case instead of
 checking the code for its correctness.
 
+This project was inspired by a section about learning tests from Robert C.
+Martin in his book Clean Code.
+
