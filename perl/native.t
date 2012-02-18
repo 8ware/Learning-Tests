@@ -24,3 +24,19 @@ is(@list, 7, 'inital length of the list is seven');
 my $singleElement = shift @list;
 is($singleElement, 'Hello', 'shifts the first element with index zero');
 is(@list, 6, 'after shifting length of list is six');
+
+#
+# Test for array-elements given as array-reference are modified by iterating
+# them with use of the $_-variable
+#
+sub modify(\@) {
+	my $strings = shift;
+	for(@{$strings}) {
+		$_ = substr $_, 0, 1;
+	}
+};
+my @strings = qw(aaa bb);
+modify @strings;
+is_deeply(\@strings, ['a', 'b'], "after modification of the string-array "
+		."the items should be trimmed to length 1");
+
