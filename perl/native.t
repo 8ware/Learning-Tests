@@ -16,9 +16,9 @@ my $res = "g1g2g3" =~ /(g1)g2(g3)/;
 is(1, $res, "Test behavior of match-operator in print- and scalar context.");
 
 #
-# Demonstrate the behavior of the shfit operator in array context
+# Demonstrate the behavior of the shfit operator 
 #
-say qq/shift operator test:/;
+say '==== The shift operator '.('=' x 15);
 my @list = qw/Hello World its time to learn perl/;
 is(@list, 7, 'inital length of the list is seven');
 my $singleElement = shift @list;
@@ -29,6 +29,7 @@ is(@list, 6, 'after shifting length of list is six');
 # Test for array-elements given as array-reference are modified by iterating
 # them with use of the $_-variable
 #
+say '==== manipulate array references with $_ '.('=' x 15);
 sub modify(\@) {
 	my $strings = shift;
 	for(@{$strings}) {
@@ -40,3 +41,17 @@ modify @strings;
 is_deeply(\@strings, ['a', 'b'], "after modification of the string-array "
 		."the items should be trimmed to length 1");
 
+#
+# Shows how shift works in an array context.
+#
+say '==== Shift in array context  '.('=' x 15);
+my @array = (1 .. 5);
+my @endpart = ();
+
+is($array[0], 1, "first element is one");
+push(@array,shift @array);
+is($array[0], 2, "first element is two now");
+
+@endpart = shift @array;
+@endpart = shift @array;
+is(@endpart,1, "this array has just one element");
