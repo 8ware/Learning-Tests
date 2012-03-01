@@ -7,6 +7,20 @@ use feature 'say';
 
 use Test::More 'no_plan';
 
+=pod
+
+=head1 NAME
+
+Lerning tests - native perl
+
+=head1 DESCRIPTION
+
+some description goes here...
+
+=head1 TEST-CASES
+
+=cut
+
 #
 # This test shows the different behavior of the match-operator in case of a
 # print- and in case of a scalar-context.
@@ -55,3 +69,14 @@ is($array[0], 2, "first element is two now");
 @endpart = shift @array;
 @endpart = shift @array;
 is(@endpart,1, "this array has just one element");
+
+=head2 Array-ranges with slices
+
+Test the extraction of ranges from an array with slices. The extraction is
+performed by the indication of a range: @array[$i .. $j]
+
+=cut
+my @array = qw(a b c d e f);
+my($i, $j) = qw(2 4);
+is_deeply([@array[$i .. $j]], ['c', 'd', 'e'], "Extraction should deliver 'c' to 'e'.");
+
