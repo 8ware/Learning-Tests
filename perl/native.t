@@ -80,3 +80,33 @@ my @array = qw(a b c d e f);
 my($i, $j) = qw(2 4);
 is_deeply([@array[$i .. $j]], ['c', 'd', 'e'], "Extraction should deliver 'c' to 'e'.");
 
+
+=head2 A special from of subroutine the B<AUTOLOAD> routine
+
+The Autoload subroutine is loaded when the called subroutine is not defined.
+The I<$AUTOLOAD> variable gets the fully qualified name of the called subroutine.
+To get the value in I<$AUTOLOAD> it is necessary to write the full qualified name too.
+
+=cut
+
+AUTOLOAD {
+ $_ = $::AUTOLOAD;
+ s/.*:://;
+ return $_;
+}
+
+sub equal($);
+
+=pod
+
+The called subroutine in this example exists but is not defined.
+To define a subroutine they need a body.
+
+=cut
+
+my $retvalue = &equal;
+ok(!defined &equal, qq/The equal subroutine is not defined because she has no body/);
+ok(exists  &equal, qq/the equal subroutine are exists because it has a prototype/);
+ok($retvalue eq "equal", qq/right name was returned/);
+is(prototype &equal, q/$/, qq/if the subroutine were defined, they would expect one skalar parameter/);
+
