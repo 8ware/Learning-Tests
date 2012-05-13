@@ -1,4 +1,4 @@
-#! /usr/bin/perl -w
+#! /usr/bin/perl 
 
 use strict;
 use warnings;
@@ -109,4 +109,42 @@ ok(!defined &equal, qq/The equal subroutine is not defined because she has no bo
 ok(exists  &equal, qq/the equal subroutine are exists because it has a prototype/);
 ok($retvalue eq "equal", qq/right name was returned/);
 is(prototype &equal, q/$/, qq/if the subroutine were defined, they would expect one skalar parameter/);
+
+
+=head2 Pass an array via reference to a subroutine 
+
+The first subroutine handles an scalar reference variable,
+when they is changed the value, the value of the referencing array is changed too.
+The second subroutine passing the values from the referencing array to an
+array.
+Changes of the value are not visible outside. It handles a copy. 
+
+=cut
+
+sub getting_reference_as_scalar 
+{
+    my $arrayref = shift;
+    like ($arrayref, qr/^ARRAY\(0x.+\)$/, q/$arrayref is a reference to
+        an array/);
+    is ($arrayref->[0], 'There', 'dereference the array');
+    $arrayref->[7] = qq/code/;
+}
+
+my @array = qw(There is more than one way to do it);
+getting_reference_as_scalar(\@array);
+is ($array[7], qq/code/, qq/especially index were modified/);
+
+sub getting_array_by_reference
+{
+    # parenthese are necessary otherwise
+    # you assign the variable shift
+    # my @newarray = @{+shift} is also possible
+    # but looks obfuscated. 
+    my @newarray = @{shift()};
+    is ($newarray[1], 'is', 'Normal array access');
+    $newarray[1] = qq/were/;
+}
+
+is ($array[1], 'is', 'no modification');
+
 
